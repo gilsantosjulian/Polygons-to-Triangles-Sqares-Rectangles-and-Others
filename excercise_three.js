@@ -30,26 +30,33 @@ readFile
             length === 3
                 ? isTriangle(array)
                     ? triangles.push(array)
-                    : null
+                    : others.push(array)
 
                 : length === 4
                     ? isSquare(array)
                         ? squares.push(array)
-                        : null
-                    : isRectangle(array)
-                        ? rectangles.push(array)
-                        : others.push(array)
+                        : isRectangle(array)
+                            ? rectangles.push(array)
+                            : others.push(array)
+                    : others.push(array)
         })
-        console.log('polygonsArray')
+        console.log('POLYGONS')
         console.log(polygonsArray)
-        console.log('triangles')
+        console.log('- Triangles')
         console.log(triangles)
-        console.log('squares')
+        console.log('- Squares')
         console.log(squares)
-        console.log('rectangles')
+        console.log('- Rectangles')
         console.log(rectangles)
-        console.log('others')
+        console.log('- Others')
         console.log(others)
+
+        const union = triangles.concat(squares, rectangles, others)
+        console.log('- UNION')
+        console.log(union)
+
+        console.log('- Union lenght === Polygons lenght')
+        console.log(union.length === polygonsArray.length ? true : false)
     })
     .catch(() => {
 
@@ -74,8 +81,9 @@ function isRectangle(item) {
     var b = parseInt(item[1]);
     var c = parseInt(item[2]);
     var d = parseInt(item[3]);
+    
 
-    (((countInArray(item, a) == 2) && (countInArray(item, b) == 2))
+    return (((countInArray(item, a) == 2) && (countInArray(item, b) == 2))
         || ((countInArray(item, c) == 2) && (countInArray(item, d) == 2))
         || ((countInArray(item, a) == 2) && (countInArray(item, c) == 2))
         || ((countInArray(item, a) == 2) && (countInArray(item, d) == 2))
@@ -86,5 +94,11 @@ function isRectangle(item) {
 }
 
 function countInArray(array, side) {
-    return array.filter(item => item == side).length;
+    var count = 0;
+    array.map((item) => {
+        if(parseInt(item) === side) {
+            count++;
+        }
+    })
+    return count;
 }
